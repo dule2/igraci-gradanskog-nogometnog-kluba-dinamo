@@ -21,6 +21,40 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: gradovi; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.gradovi (
+    id integer NOT NULL,
+    naziv character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.gradovi OWNER TO postgres;
+
+--
+-- Name: gradovi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.gradovi_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gradovi_id_seq OWNER TO postgres;
+
+--
+-- Name: gradovi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.gradovi_id_seq OWNED BY public.gradovi.id;
+
+
+--
 -- Name: igrac_klub; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -57,11 +91,54 @@ ALTER TABLE public.igraci OWNER TO postgres;
 
 CREATE TABLE public.klubovi (
     ime character varying(40) NOT NULL,
-    grad character varying(40)
+    grad_id integer
 );
 
 
 ALTER TABLE public.klubovi OWNER TO postgres;
+
+--
+-- Name: gradovi id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gradovi ALTER COLUMN id SET DEFAULT nextval('public.gradovi_id_seq'::regclass);
+
+
+--
+-- Data for Name: gradovi; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.gradovi (id, naziv) FROM stdin;
+1	Bologna
+2	Cardiff
+3	Catania
+4	Chiavari
+5	Concarneau
+6	Granada
+7	La Spezia
+8	Le Mans
+9	Lisbon
+10	Murska Sobota
+11	Neretva
+12	Osijek
+13	Paris
+14	Reggio Emilia
+15	Rennes
+16	Rijeka
+17	Saint-Étienne
+18	Split
+19	Šibenik
+20	Thessaloniki
+21	Trapani
+22	Turin
+23	Varaždin
+24	Varese
+25	Velika Gorica
+26	Verona
+27	Warsaw
+28	Zagreb
+\.
+
 
 --
 -- Data for Name: igrac_klub; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -131,40 +208,63 @@ Dario	Špikić	77	napadač	1999-03-22	Zagreb	183	132	18
 -- Data for Name: klubovi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.klubovi (ime, grad) FROM stdin;
-Neretva	Neretva
-Zagreb	Zagreb
-HAŠK	Zagreb
-Hrvatski dragovoljac	Zagreb
-Catania	Catania
-Varese	Varese
-Reggiana	Reggio Emilia
-Virtus Entella	Chiavari
-Trapani	Trapani
-Bologna	Bologna
-Verona	Verona
-Rijeka	Rijeka
-Varaždin	Varaždin
-NŠ Mura	Murska Sobota
-Osijek	Osijek
-Rennes	Rennes
-Cardiff City	Cardiff
-Saint-Étienne	Saint-Étienne
-Concarneau	Concarneau
-Le Mans FC	Le Mans
-Paris FC 	Paris
-Granada FC	Granada
--	-
-Spezia	La Spezia
-Sporting	Lisbon
-PAOK	Thessaloniki
-Šibenik	Šibenik
-Lokomotiva	Zagreb
-Legia Warsaw	Warsaw
-Juventus U19	Turin
-Hajduk	Split
-Gorinca	Velika Gorica
+COPY public.klubovi (ime, grad_id) FROM stdin;
+-	\N
+Bologna	1
+Cardiff City	2
+Catania	3
+Virtus Entella	4
+Concarneau	5
+Granada FC	6
+Spezia	7
+Le Mans FC	8
+Sporting	9
+NŠ Mura	10
+Neretva	11
+Osijek	12
+Paris FC 	13
+Reggiana	14
+Rennes	15
+Rijeka	16
+Saint-Étienne	17
+Hajduk	18
+Šibenik	19
+PAOK	20
+Trapani	21
+Juventus U19	22
+Varaždin	23
+Varese	24
+Gorinca	25
+Verona	26
+Legia Warsaw	27
+Lokomotiva	28
+Hrvatski dragovoljac	28
+HAŠK	28
+Zagreb	28
 \.
+
+
+--
+-- Name: gradovi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.gradovi_id_seq', 28, true);
+
+
+--
+-- Name: gradovi gradovi_naziv_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gradovi
+    ADD CONSTRAINT gradovi_naziv_key UNIQUE (naziv);
+
+
+--
+-- Name: gradovi gradovi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gradovi
+    ADD CONSTRAINT gradovi_pkey PRIMARY KEY (id);
 
 
 --
@@ -205,6 +305,14 @@ ALTER TABLE ONLY public.igrac_klub
 
 ALTER TABLE ONLY public.igrac_klub
     ADD CONSTRAINT igrac_klub_prezime_fkey FOREIGN KEY (prezime) REFERENCES public.igraci(prezime);
+
+
+--
+-- Name: klubovi klubovi_grad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.klubovi
+    ADD CONSTRAINT klubovi_grad_id_fkey FOREIGN KEY (grad_id) REFERENCES public.gradovi(id);
 
 
 --

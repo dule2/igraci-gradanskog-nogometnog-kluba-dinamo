@@ -1,0 +1,95 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/dule2/igraci-gradanskog-nogometnog-kluba-dinamo/blob/main/data/igraci_dinama.json",
+    "type": "array",
+    "title": "Igrači GNK Dinamo Zagreb",
+    "description": "Skup igrača Građanskog nogometnog kluba Dinamo Zagreb s klubovima u kojima su ranije igrali.",
+    "items": {
+        "type": "object",
+        "title": "Igrač",
+        "description": "Objekt koji sadrži sve podatke o jednom igraču.",
+        "required": [
+            "ime",
+            "prezime",
+            "broj",
+            "pozicija",
+            "datum_rodenja",
+            "mjesto_rodenja",
+            "visina",
+            "broj_nastupa",
+            "broj_golova",
+            "prethodni_klubovi"
+        ],
+        "properties": {
+            "ime": {
+                "type": "string",
+                "title": "Ime",
+                "description": "Ime igrača."
+            },
+            "prezime": {
+                "type": "string",
+                "title": "Prezime",
+                "description": "Prezime igrača."
+            },
+            "broj": {
+                "type": "integer",
+                "title": "Broj",
+                "description": "Broj na dresu."
+            },
+            "pozicija": {
+                "type": "string",
+                "title": "Pozicija",
+                "description": "Pozicija na terenu (vratar, branič, vezni ili napadač)."
+            },
+            "datum_rodenja": {
+                "type": "string",
+                "format": "date",
+                "title": "Datum rođenja",
+                "description": "Datum rođenja u obliku GGGG-MM-DD."
+            },
+            "mjesto_rodenja": {
+                "type": "string",
+                "title": "Mjesto rođenja",
+                "description": "Mjesto u kojem je igrač roden."
+            },
+            "visina": {
+                "type": "integer",
+                "title": "Visina",
+                "description": "Visina igrača u centimetrima."
+            },
+            "broj_nastupa": {
+                "type": "integer",
+                "title": "Broj nastupa",
+                "description": "Ukupan broj nastupa u karijeri."
+            },
+            "broj_golova": {
+                "type": "integer",
+                "title": "Broj golova",
+                "description": "Ukupan broj postignutih golova u karijeri."
+            },
+            "prethodni_klubovi": {
+                "type": "array",
+                "title": "Raniji klubovi",
+                "description": "Klubovi u kojima je igrač ranije igrao; prazno polje ako nema podataka.",
+                "items": {
+                    "type": "object",
+                    "title": "Klub",
+                    "description": "Raniji klub igrača s gradom u kojem se klub nalazi.",
+                    "required": ["ime", "grad"],
+                    "properties": {
+                        "ime": {
+                            "type": "string",
+                            "title": "Ime kluba",
+                            "description": "Naziv kluba."
+                        },
+                        "grad": {
+                            "type": "string",
+                            "title": "Grad kluba",
+                            "description": "Naziv grada u kojem se klub nalazi."
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
